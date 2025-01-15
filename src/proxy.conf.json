@@ -1,0 +1,19 @@
+// src/proxy.conf.json
+{
+  "/api-auth": {
+    "target": "http://109.199.125.252:3001",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api-auth": "/api"
+    }
+  },
+  "/api-docs": {
+    "target": "http://109.199.125.252:3000",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api-docs": "/api"
+    }
+  }
+}
