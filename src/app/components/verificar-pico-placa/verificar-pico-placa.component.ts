@@ -13,19 +13,39 @@ export class VerificarPicoPlacaComponent {
 
   constructor(private fb: FormBuilder, private picoPlacaService: PicoPlacaService) {
     this.formulario = this.fb.group({
-      placa: ['', [Validators.required, Validators.pattern('^[A-Z]{3}-[0-9]{3,4}$')]], // Ajusta el patrón según tu formato de placa
-      fechaHora: ['', Validators.required], // Campo único para fecha y hora
+      placa: ['', [Validators.required, Validators.pattern('^[A-Z]{3}-[0-9]{3,4}$')]], 
+      fechaHora: ['', Validators.required], 
     });
   }
+
+  transformarPlaca(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.toUpperCase(); 
+  
+    valor = valor.replace(/[^A-Z0-9-]/g, '');
+  
+    let letras = valor.split('-')[0].replace(/[^A-Z]/g, ''); 
+    let numeros = valor.split('-')[1]?.replace(/[^0-9]/g, '') || '';
+  
+    letras = letras.substring(0, 3);
+  
+    numeros = numeros.substring(0, 4);
+  
+    valor = letras;
+    if (letras.length === 3) {
+      valor += '-' + numeros;
+    }
+  
+    this.formulario.get('placa')?.setValue(valor, { emitEvent: false });
+  }
+  
   
   verificarPicoPlaca() {
     if (this.formulario.valid) {
       const { placa, fechaHora } = this.formulario.value;
   
-      // Convertir fechaHora a timestamp
-      const timestamp = new Date(fechaHora).getTime(); // Convertir a timestamp
+      const timestamp = new Date(fechaHora).getTime(); 
   
-      // Llamar al servicio
       this.picoPlacaService.verificar({ placa, timestamp }).subscribe({
         next: (response) => {
           this.resultado = response;

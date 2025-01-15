@@ -8,8 +8,10 @@
           id="placa"
           type="text"
           formControlName="placa"
-          placeholder="Ingrese la placa"
+          placeholder="Ingrese la placa Ejm. XXX-000"
+          maxlength="8"
           required
+          (input)="transformarPlaca($event)"
         />
         <div
           *ngIf="
@@ -18,7 +20,7 @@
           class="error-message"
         >
           <small *ngIf="formulario.get('placa')?.hasError('required')">La placa es requerida.</small>
-          <small *ngIf="formulario.get('placa')?.hasError('pattern')">Formato de placa inválido.</small>
+          <small *ngIf="formulario.get('placa')?.hasError('pattern')">Formato de placa inválido (Ejm. XXX-0000).</small>
         </div>
       </div>
 
