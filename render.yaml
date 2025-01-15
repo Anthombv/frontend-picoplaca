@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: frontend-picoplaca
+    runtime: docker
+    dockerfilePath: Dockerfile
