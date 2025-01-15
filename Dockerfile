@@ -14,13 +14,13 @@ RUN npm install
 COPY . .
 
 # Compila la aplicación Angular para producción
-RUN npm run build --prod
+RUN npm run build
 
 # Segunda etapa: Servidor web para alojar la aplicación
 FROM nginx:alpine
 
 # Copia los archivos compilados al servidor Nginx
-COPY --from=build /app/dist/<nombre-del-proyecto> /usr/share/nginx/html
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
 
 # Expone el puerto 80
 EXPOSE 80
